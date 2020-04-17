@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+<title>Wavelength</title>
+
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
+
+<style>
+
+* {
+    font-family: sans-serif;
+    font-size: 2vw;
+    line-height: 1.2;
+}
+
+body {
+    margin:0;
+}
+
+#spectrumwrap {
+	position: relative;
+	width: 90vw;
+	height: 35vh;
+	top: 5vh;
+	left:0;
+	display:-webkit-flex;
+	margin:0 5vw;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.spectrum {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    width:calc(90vw / 30);
+    text-align: center;
+    line-height: 35vh;
+}
+
+#spectrumrefwrap {
+	position: relative;
+	width: 90vw;
+	height: calc(90vw / 30);
+	top: calc(40vh + 3px);
+	top: 5vh;
+	left:0;
+	display:-webkit-flex;
+	margin:0 5vw;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    z-index: -1;
+}
+
+.spectrumref {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 2px solid #000;
+    width:calc(90vw / 30);
+    text-align: center;
+    line-height: calc(90vw / 30);
+    font-size: 1.5vw;
+}
+
+#infowrap {
+	position: relative;
+	width: 90vw;
+	height: 22vh;
+	top: 47vh;
+	top: 7vh;
+	left:0;
+	display:-webkit-flex;
+	padding:0 5vw;
+}
+
+#info {
+    width: 90vw;
+     text-align: center;
+    margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#info,#info_target_wrap, #info_target {
+
+}
+
+#info_target_wrap {
+    border: 2px solid #000;
+    padding: 1vw 2vw;
+    line-height: 2.2;
+}
+
+#cards {
+	position: absolute;
+	width: 90vw;
+	height: 20vh;
+	bottom: 5vh;
+	left:0;
+	display:-webkit-flex;
+	padding:0 5vw;
+}
+
+#orwrap {
+    display: inline-block;
+    width: 10vw;
+    height:20vh;
+    padding:0;
+    margin:0;
+}
+
+#card1wrap, #card2wrap {
+	width:calc(40vw - 4px);
+	height:20vh;
+    display: -webkit-flex;
+    margin:0;
+}
+
+#card1lwrap, #card2lwrap {
+	width:calc(17.5vw - 2px);
+	height:20vh;
+    display: inline-block;
+    padding:0 2.5vw;
+    border-left: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-right: 1px solid #000;
+}
+
+#card1rwrap, #card2rwrap {
+	width:calc(17.5vw - 2px);
+	height:20vh;
+    display: inline-block;
+    padding:0 2.5vw;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 1px solid #000;
+}
+
+#card1l, #card2l, #card1r, #card2r,  #or {
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#card1l, #card2l, #card1r, #card2r {width:calc(15vw - 2px);}
+
+#or {width:10vw}
+
+#button1 {
+    position
+}
+
+.arrowl {
+    position: absolute;
+    width: calc(38vw - 4px);
+    height: 10vh;
+    margin: 4px 0 0 2vw;
+    text-align: left;
+}
+
+.arrowr {
+    position: absolute;
+    width: calc(38vw - 4px);
+    height: 10vh;
+    margin: 4px 2vw 0 0;
+    text-align: right;
+}
+
+</style>
+
+<script>
+
+cards = [["Nature","Nurture"],["Worthless","Priceless"],["Hard to do","Easy to do"],["Wise","Intelligent"],["For kids","For adults"],["Useless in an emergency","Useful in an emergency"],["Underrated thing to do","Overrated thing to do"],["Villain","Hero"],["Smelly in a bad way","Smelly in a good way"],["Boring","Exciting"],["Friend","Enemy"],["Unpopular","Popular"],["Liberal","Conservative"],["Useless invention","Useful invention"],["Disgusting cereal","Delicious cereal"],["Weak","Strong"],["Fad","Classic"],["Useless body part","Useful body part"],["Traditionally masculine","Traditionally feminine"],["Bad TV show","Good TV show,"],["Round animal","Pointy animal"],["Unstable","Stable"],["Easy to kill","Hard to kill"],["Unreliable","Reliable"],["Divided","Whole"],["Unpopular activity","Popular activity"],["Underrated musician","Overrated musician"],["Vice","Virtue"],["Easy to spell","Hard to spell"],["Unimportant","Important"],["Movie that Godzilla would ruin","Movie that Godzilla would improve"],["Useless","Useful"],["Bad music","Good music"],["Unhygienic","Hygienic"],["Gryffindor","Slytherin"],["Harmless","Harmful"],["Failure","Masterpiece"],["Unforgivable","Forgivable"],["Freedom fighter","Terrorist"],["Unfashionable","Fashionable"],["Boring hobby","Interesting hobby"],["Unethical","Ethical"],["Messy food","Clean food"],["Underrated","Overrated"],["Worst living person","Greatest living person"],["Uncool","Cool"],["Sport","Game"],["Tastes bad","Tastes good"],["Looks like a person","Doesn't look like a person"],["Temporary","Permanent"],["Trashy","Classy"],["Unbelievable","Believable"],["Ineffective","Effective"],["Bad superpower","Good superpower"],["Artisanal","Mass produced"],["Stupid","Brilliant"],["Better hot","Better cold"],["Square","Round"],["Sustenance","Haute cuisine"],["Soft","Hard"],["Least evil company","Most evil company"],["Snack","Meal"],["Star Wars","Star Trek"],["Smells bad","Smells good"],["Nobody does it","Everybody does it"],["Short lived","Long lived"],["Mainstream","Niche"],["Scary animal","Nice animal"],["Waste of time","Good use of time"],["Sad movie","Happy movie"],["Proof that god exists","Proof that god doesn't exist"],["Round","Pointy"],["Bad for you","Good for you"],["Rough","Smooth"],["Underrated movie","Overrated movie"],["Peaceful","Warlike"],["Useless major","Useful major"],["Role model","Bad influence"],["Worst athlete of all time","Greatest athlete of all time"],["Replaceable","Irreplaceable"],["Culturally significant","Culturally insignificant"],["Dangerous","Safe"],["Comedy","Drama"],["Quiet place","Loud place"],["Not a sandwich","A sandwich"],["Poorly made","Well made"],["Has a bad reputation","Has a good reputation"],["Plain","Fancy"],["Unsexy animal","Sexy animal"],["Low quality","High quality"],["Hard to pronounce","Easy to pronounce"],["Ordinary","Extraordinary"],["Underrated letter of the alphabet","Overrated letter of the alphabet"],["Optional","Mandatory"],["Movie","Film"],["Ethical to eat","Unethical to eat"],["80s","90s"],["Bad person","Good person"],["Straight","Curvy"],["Normal thing to own","Weird thing to own"],["Dry food","Wet food"],["Need","Want"],["Uncontroversial topic","Controversial topic"],["Mental activity","Physical activity"],["Action movie","Adventure movie"],["Mean person","Nice person"],["Underrated thing to own","Overrated thing to own"],["Mature person","Immature person"],["Dystopia","Utopia"],["Bad pizza topping","Good pizza topping"],["The Light Side of the Force","The Dark Side of the Force"],["Loved","Hated"],["Job","Career"],["Happens slowly","Happens suddenly"],["Ugly","Beautiful"],["Bad movie","Good movie"],["Book was better","Movie was better"],["Introvert","Extrovert"],["Normal pet","Exotic pet"],["Inflexible","Flexible"],["Hairless","Hairy"],["Historically important","Historically irrelevant"],["Bad man","Good man"],["Unhealthy","Healthy"],["Lowbrow","Highbrow"],["Hard to remember","Easy to remember"],["Ugly man","Beautiful man"],["Hard to find","Easy to find"],["Underrated actor","Overrated actor"],["Dark","Light"],["Untalented","Talented"],["Guilty pleasure","Openly love"],["Cat person","Dog person"],["Bad habit","Good habit"],["Worst day of the year","Best day of the year"],["Good","Evil"],["Geek","Dork"],["Fragile","Durable"],["Sad song","Happy song"],["Forbidden","Encouraged"],["Underrated skill","Overrated skill"],["Dry","Wet"],["Underpaid","Overpaid"],["Casual","Formal"],["Fantasy","Sci-Fi"],["Dangerous job","Safe job"],["Basic","Hipster"],["Bad actor","Good actor"],["Boring topic","Fascinating topic"],["Flavorless","Flavorful"],["Requires luck","Requires skill"],["Dirty","Clean"],["Tired","Wired"],["Difficult to use","Easy to use"],["Unknown","Famous"],["Easy subject","Hard subject"],["Unsexy emoji","Sexy emoji"],["Rare","Common"],["Underrated weapon","Overrated weapon"],["Cheap","Expensive"],["Inessential","Essential"],["Feels bad","Feels good"],["Low calorie","High calorie"],["Colorless","Colorful"],["Normal","Weird"],["Hot","Cold"],["Mildly addictive","Highly addictive"],["Bad","Good"],["Underrated game","Overrated game"],["Person you could beat up","Person who'd beat you up"],["Nerd","Jock"],["Blue","Green"],["Worst chore","Best chore"],["Underrated book","Overrated book"],["Least powerful god","Most powerful god"],["Weird","Strange"],["Similar","Identical"],["Won't live to 100","Will live to 100"],["Bad school","Good school"],["Illegal","Legal"],["Traditional","Radical"],["Tick","Tock"],["One hit wonder","Pop icon"],["Bad dog (breed)","Good dog (breed)"],["Hetrogeneous","Homogenous"],["Unscented","Scented"],["Not enough","Too much"],["Gossip","News"],["Limp","Firm"],["Science","Pseudoscience"],["Vape","Doesn't vape"],["Benefits you","Benefits everyone"],["Etiquette","Manners"],["Genuine person","Phony person"],["Small","Tiny"],["Old fashioned","Avant garde"],["Small number","Large number"],["Worst era to time travel","Best era to time travel"],["Local issue","Global issue"],["Little known fact","Well known fact"],["Worst year in history","Best year in history"],["Too small","Too big"],["Unsexy Pokémon","Sexy Pokémon"],["Out of control","In control"],["Illegal","Prohibited"],["Religious","Sacrilegious"],["Small talk","Heavt topic"],["Casual event","Formal event"],["Non-partisan","Partisan"],["Normal greeting","Weird greeting"],["Unreasonable phobia","Reasonable phobia"],["Expected","Unexpected"],["Thrilling","Terrifying"],["Endangered species","Overpopulated species"],["Conventional wisdom","Fringe belief"],["Boring person","Fun person"],["Famous","Infamous"],["Bad president","Good president"],["Bad Disney character","Good Disney character"],["Never on time","Always on time"],["Deep thought","Shallow thought"],["Bad mouthfeel","Good mouthfeel"],["Bad candy","Good candy"],["Bad advice","Good advice"],["Art","Commerce"],["Inclusive","Exclusive"],["Not huggable","Huggable"],["Horizontal","Vertical"],["Hard to sit on","Easy to sit on"],["Guilty pleasure","Actually just bad"],["Funny topic","Serious topic"],["Fruit","Vegetable"],["Powerless","Powerful"],["Unsexy color","Sexy color"],["Derivative","Original"],["Unnatural","Natural"],["Ugly word","Beautiful word"],["True","False"],["The worst","The best"],["Talent","Skill"],["Stationary","Mobile"],["Socialist","Capitalist"],["Short","Long"],["Secret","Public Knowledge"],["Quiet","Loud"],["Popular","Elitist"],["Not art","Art"],["Mild","Spicy"],["Bad investment","Good investment"],["Limited","Infinite"],["Dog name","Cat name"],["Dictatorship","Democracy"]];
+
+colours = ["#2a9cff", "#ffc81a", "#ff6632", "#00aa72", "#ffd4fb", "#c6aaff", "#cccccc"];
+
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+}
+
+    
+// ON LOAD
+window.onload = function() {
+
+shuffle(cards);
+document.getElementById('card1l').innerHTML = cards[0][0];
+document.getElementById('card1r').innerHTML = cards[0][1];
+document.getElementById('card2l').innerHTML = cards[1][0];
+document.getElementById('card2r').innerHTML = cards[1][1];
+
+shuffle(colours);
+document.getElementById('card1lwrap').style.background = colours[0];
+document.getElementById('card2lwrap').style.background = colours[1];
+document.getElementById('card1rwrap').style.background = colours[2];
+document.getElementById('card2rwrap').style.background = colours[3];
+
+target = Math.floor(Math.random() * 30); 
+
+document.getElementById('info_target').innerHTML = target + 1;
+
+document.getElementsByClassName('spectrum')[target].style.background = colours[4];
+document.getElementsByClassName('spectrumref')[target].style.background = colours[4];
+document.getElementById('info_target_wrap').style.background = colours[4];
+
+document.getElementsByClassName('spectrum')[target].innerHTML = '4';
+
+if (target > 0) {
+    document.getElementsByClassName('spectrum')[target-1].style.background = colours[5]
+    document.getElementsByClassName('spectrum')[target-1].innerHTML = '3';
+    }
+    
+if (target > 1) {
+    document.getElementsByClassName('spectrum')[target-2].style.background = colours[6]
+    document.getElementsByClassName('spectrum')[target-2].innerHTML = '2';
+    }
+
+if (target < 30) {
+    document.getElementsByClassName('spectrum')[target+1].style.background = colours[5]
+    document.getElementsByClassName('spectrum')[target+1].innerHTML = '3';
+    }
+    
+if (target < 29) {
+    document.getElementsByClassName('spectrum')[target+2].style.background = colours[6]
+    document.getElementsByClassName('spectrum')[target+2].innerHTML = '2';
+    }
+
+
+};
+
+
+</script>
+
+</head>
+
+<!------------------------------------------    END OF HEAD    ------------------------------------------>
+
+<body>
+
+
+<div id='spectrumwrap'>
+    <div class='spectrum' id='spectrum1'></div>
+    <div class='spectrum' id='spectrum2'></div>
+    <div class='spectrum' id='spectrum3'></div>
+    <div class='spectrum' id='spectrum4'></div>
+    <div class='spectrum' id='spectrum5'></div>
+    <div class='spectrum' id='spectrum6'></div>
+    <div class='spectrum' id='spectrum7'></div>
+    <div class='spectrum' id='spectrum8'></div>
+    <div class='spectrum' id='spectrum9'></div>
+    <div class='spectrum' id='spectrum10'></div>
+    <div class='spectrum' id='spectrum11'></div>
+    <div class='spectrum' id='spectrum12'></div>
+    <div class='spectrum' id='spectrum13'></div>
+    <div class='spectrum' id='spectrum14'></div>
+    <div class='spectrum' id='spectrum15'></div>
+    <div class='spectrum' id='spectrum16'></div>
+    <div class='spectrum' id='spectrum17'></div>
+    <div class='spectrum' id='spectrum18'></div>
+    <div class='spectrum' id='spectrum19'></div>
+    <div class='spectrum' id='spectrum20'></div>
+    <div class='spectrum' id='spectrum21'></div>
+    <div class='spectrum' id='spectrum22'></div>
+    <div class='spectrum' id='spectrum23'></div>
+    <div class='spectrum' id='spectrum24'></div>
+    <div class='spectrum' id='spectrum25'></div>
+    <div class='spectrum' id='spectrum26'></div>
+    <div class='spectrum' id='spectrum27'></div>
+    <div class='spectrum' id='spectrum28'></div>
+    <div class='spectrum' id='spectrum29'></div>
+    <div class='spectrum' id='spectrum30'></div>
+</div>
+
+<div id='spectrumrefwrap'>
+    <div class='spectrumref'>1</div>
+    <div class='spectrumref'>2</div>
+    <div class='spectrumref'>3</div>
+    <div class='spectrumref'>4</div>
+    <div class='spectrumref'>5</div>
+    <div class='spectrumref'>6</div>
+    <div class='spectrumref'>7</div>
+    <div class='spectrumref'>8</div>
+    <div class='spectrumref'>9</div>
+    <div class='spectrumref'>10</div>
+    <div class='spectrumref'>11</div>
+    <div class='spectrumref'>12</div>
+    <div class='spectrumref'>13</div>
+    <div class='spectrumref'>14</div>
+    <div class='spectrumref'>15</div>
+    <div class='spectrumref'>16</div>
+    <div class='spectrumref'>17</div>
+    <div class='spectrumref'>18</div>
+    <div class='spectrumref'>19</div>
+    <div class='spectrumref'>20</div>
+    <div class='spectrumref'>21</div>
+    <div class='spectrumref'>22</div>
+    <div class='spectrumref'>23</div>
+    <div class='spectrumref'>24</div>
+    <div class='spectrumref'>25</div>
+    <div class='spectrumref'>26</div>
+    <div class='spectrumref'>27</div>
+    <div class='spectrumref'>28</div>
+    <div class='spectrumref'>29</div>
+    <div class='spectrumref'>30</div>
+</div>
+
+<div id='infowrap'>
+    <div id='info'>
+        <span id='info_target_wrap'>The target area is <span id='info_target'>?</span></span>
+    </div>
+</div>
+
+
+<div id='cards'>
+
+<div id='card1wrap'>
+    <div id='card1lwrap'>
+	    <div id='card1l'></div>
+	</div>
+    <div id='card1rwrap'>
+	    <div id='card1r'></div>
+	</div>
+<div class='arrowl'>←</div>
+<div class='arrowr'>→</div>
+</div>
+
+<div id='orwrap'>
+	<div id='or'>OR</div>
+</div>
+
+<div id='card2wrap'>
+    <div id='card2lwrap'>
+	    <div id='card2l'></div>
+	</div>
+    <div id='card2rwrap'>
+	    <div id='card2r'></div>
+	</div>
+<div class='arrowl'>←</div>
+<div class='arrowr'>→</div>
+</div>
+
+</div>
+
+
+<!------------------------------------------    FUNCTIONS    ------------------------------------------>
+
+<script>
+
+</script>
+
+</body>
+
+</html>
+
